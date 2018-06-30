@@ -24,7 +24,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y*dt);
+    ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -35,10 +35,9 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
 var Player = function() {
     this.x = 202;
-    this.y = 370;
+    this.y = 380;
     this.sprite = 'images/char-boy.png';
 }
 
@@ -49,13 +48,38 @@ Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y*dt);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+Player.prototype.handleInput = function (allowedKeys) {
+    switch (allowedKeys) {
+        case 'up':
+            if (this.y < 80) {
+                // TODO implement win screen and reset of game
+                console.log('you won!');
+            }
+            this.y = this.y - 80;
+            break;
+        case 'down':
+            if (this.y > 300) break;
+            this.y = this.y + 80;
+            break;
+        case 'left':
+            if (this.x < 102) break;
+            this.x = this.x - 100;
+            break;
+        case 'right':
+            if (this.x > 302) break;
+            this.x = this.x + 100;
+            break;
+    }
+    this.render();
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
