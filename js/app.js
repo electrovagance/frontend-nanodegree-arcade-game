@@ -4,7 +4,7 @@ var Enemy = function() {
     // we've provided one for you to get started
 
     // sets the starting coordinates of Enemy
-    this.x = 202
+    this.x = 0;
     this.y = -101;
 
     // The image/sprite for our enemies, this uses
