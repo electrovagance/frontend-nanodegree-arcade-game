@@ -4,7 +4,7 @@ var Enemy = function() {
     // we've provided one for you to get started
 
     // sets the starting coordinates of Enemy
-    this.x = 0;
+    this.x = -100;
     this.y = Math.floor(Math.random() * 300) + 100;
 
     // The image/sprite for our enemies, this uses
@@ -34,15 +34,31 @@ var Player = function() {
     this.x = 303;
     this.y = 606;
     this.sprite = 'images/char-cat-girl';
+}
 
-    const renderPlayer = Enemy.render.bind(this);
-    const updatePlayer = Enemy.update.bind(this);
+// Draw the enemy on the screen, required method for game
+Player.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Update the players's position, required method for game
+// Parameter: dt, a time delta between ticks
+Player.prototype.update = function (dt) {
+    // You should multiply any movement by the dt parameter
+    // which will ensure the game runs at the same speed for
+    // all computers.
+    // ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y*dt);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+const enemy1 = new Enemy();
+const enemy2 = new Enemy();
+const enemy3 = new Enemy();
+const allEnemies = [enemy1, enemy2, enemy3];
+
 // Place the player object in a variable called player
-
-
+const player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -56,3 +72,7 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+function newFunction() {
+    return new Enemy();
+}
+
