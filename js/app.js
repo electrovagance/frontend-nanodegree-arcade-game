@@ -4,8 +4,14 @@ var Enemy = function() {
     // we've provided one for you to get started
 
     // sets the starting coordinates of Enemy
-    this.x = -100;
-    this.y = Math.floor(Math.random() * 300) + 100;
+    const yCoordinates = [60, 145, 227];
+    this.x = 0;
+    this.y = random();
+    
+    // returns random y coordinate from the yCoordinates set 
+    function random() {
+        return yCoordinates[Math.floor(Math.random() * 3)];
+    }
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -33,13 +39,9 @@ Enemy.prototype.render = function() {
 var Player = function() {
     this.x = 303;
     this.y = 606;
-    this.sprite = 'images/char-cat-girl';
+    this.sprite = 'images/char-boy.png';
 }
 
-// Draw the enemy on the screen, required method for game
-Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
 
 // Update the players's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -47,7 +49,12 @@ Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    // ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y*dt);
+    ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y*dt);
+};
+
+// Draw the enemy on the screen, required method for game
+Player.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now instantiate your objects.
