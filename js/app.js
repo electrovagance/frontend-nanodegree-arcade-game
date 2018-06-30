@@ -2,7 +2,11 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    
+
+    // sets the starting coordinates of Enemy
+    this.x = 202
+    this.y = -101;
+
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -14,7 +18,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), 0, 0);
+    ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y*dt);
 };
 
 // Draw the enemy on the screen, required method for game
