@@ -5,13 +5,11 @@ var Enemy = function() {
 
     // sets the starting coordinates of Enemy
     const yCoordinates = [60, 145, 227];
-    this.x = 0;
-    this.y = random();
-    
+    this.x = -100;
     // returns random y coordinate from the yCoordinates set 
-    function random() {
-        return yCoordinates[Math.floor(Math.random() * 3)];
-    }
+    this.y = yCoordinates[Math.floor(Math.random() * 3)];
+
+    this.speed = Math.random() * 5 +1;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -23,14 +21,27 @@ var Enemy = function() {
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
-    // all computers.
+    // all computers.    
+    this.x = this.x + this.speed;
     ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y);
+    
+    // resets x coordiante if bug is off screen
+    if (this.x > 700) this.x = -100;
+    
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+// TODO
+    // Checks if Enemy occupies same location as sprint
+function checkCollisions() {
+    // check if any of the enemy 
+    
+    // if ()
+}
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -56,6 +67,7 @@ Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//  Updates player position
 Player.prototype.handleInput = function (allowedKeys) {
     switch (allowedKeys) {
         case 'up':
@@ -86,10 +98,14 @@ Player.prototype.handleInput = function (allowedKeys) {
 const enemy1 = new Enemy();
 const enemy2 = new Enemy();
 const enemy3 = new Enemy();
+const enemy4 = new Enemy();
+const enemy5 = new Enemy();
+const enemy6 = new Enemy();
 const allEnemies = [enemy1, enemy2, enemy3];
 
 // Place the player object in a variable called player
 const player = new Player();
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -103,7 +119,7 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
 function newFunction() {
     return new Enemy();
 }
-
