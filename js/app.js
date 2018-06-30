@@ -5,7 +5,7 @@ var Enemy = function() {
 
     // sets the starting coordinates of Enemy
     this.x = 0;
-    this.y = -101;
+    this.y = Math.floor(Math.random() * 300) + 100;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -30,6 +30,13 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+var Player = function() {
+    this.x = 303;
+    this.y = 606;
+    this.sprite = 'images/char-cat-girl';
+
+    const renderPlayer = Enemy.render.bind(this);
+    const updatePlayer = Enemy.update.bind(this);
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
