@@ -1,6 +1,20 @@
-frontend-nanodegree-arcade-game
-===============================
+# frontend-nanodegree-arcade-game
+This project is a recreation of the classic arcade game Frogger. :frog:
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Installation
+I recommend opening the game which is [here](https://electrovagance.github.io/frontend-nanodegree-arcade-game/). 
+Just open the link and you are ready to go! :video_game: 
+You could also clone the project, which I do not recommend simply because I will add more functionalities in the future.
+
+
+## How to play
+Once you open the link the game automatically starts. You move the player by using the arrow keyboard buttons (up, down, left, and right).
+
+
+## Rules
+Goal of the game is to successfully cross the stone road while avoiding colliding with enemies :beetle:. The game resets itself once you reach the water block or you get hit by an enemy.
+
+
+## License
+This project is licensed under the terms of [Academic Free License (v3.0)](https://opensource.org/licenses/AFL-3.0).
