@@ -4,13 +4,12 @@ var Enemy = function() {
     // we've provided one for you to get started
 
     // sets the starting coordinates of Enemy
-    const yCoordinates = [60, 145, 227];
-    this.x = -100;
+    const yCoordinates = [60, 145, 230];
+    this.x = Math.floor(Math.random() * 500 - 500);
     // returns random y coordinate from the yCoordinates set 
     this.y = yCoordinates[Math.floor(Math.random() * 3)];
 
-    this.speed = Math.random() * 5 +1;
-
+    this.speed = Math.random() * 7 +3;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -22,11 +21,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.    
-    this.x = this.x + this.speed;
+    this.x = Math.floor(this.x + this.speed);
     ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y);
     
     // resets x coordiante if bug is off screen
-    if (this.x > 700) this.x = -100;
+    if (this.x > 700) this.x = -700;
     
 };
 
@@ -35,23 +34,40 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// TODO
-    // Checks if Enemy occupies same location as sprint
-function checkCollisions() {
-    // check if any of the enemy 
-    
-    // if ()
-}
-
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.x = 202;
-    this.y = 380;
+    this.x = 200;
+    this.y = 400;
     this.sprite = 'images/char-boy.png';
 }
 
+
+// TODO
+// Checks if Enemy occupies same location as sprint
+function checkCollisions() {
+    // check if any of the enemy is on the same y coordinate   
+    const yCoor = allEnemies.map(
+        enemy => enemy.y
+    );
+
+    const xCoor = allEnemies.map(
+        enemy => enemy.x
+    );
+
+
+    for (let i = 0; i < yCoor.length; i++) {
+        // checks if player;s or enemy's x coordinate match
+        if (xCoor[i] === this.x) {
+            if (yCoor[i] === this.y) {
+                console.log('Collusion!');
+                resetGame();
+            }
+        }
+    }
+ 
+}
 
 // Update the players's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -59,12 +75,13 @@ Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x-10, this.y);
 };
 
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    checkCollisions.call(this);
 };
 
 //  Updates player position
@@ -72,17 +89,17 @@ Player.prototype.handleInput = function (allowedKeys) {
     switch (allowedKeys) {
         case 'up':
             if (this.y < 80) {
-                // TODO implement win screen and reset of game
-                console.log('you won!');
+                console.log('You won!');
+                resetGame();
             }
-            this.y = this.y - 80;
+            this.y = this.y - 85;
             break;
         case 'down':
             if (this.y > 300) break;
-            this.y = this.y + 80;
+            this.y = this.y + 85;
             break;
         case 'left':
-            if (this.x < 102) break;
+            if (this.x < 50) break;
             this.x = this.x - 100;
             break;
         case 'right':
@@ -93,6 +110,7 @@ Player.prototype.handleInput = function (allowedKeys) {
     this.render();
 }
 
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 const enemy1 = new Enemy();
@@ -101,10 +119,10 @@ const enemy3 = new Enemy();
 const enemy4 = new Enemy();
 const enemy5 = new Enemy();
 const enemy6 = new Enemy();
-const allEnemies = [enemy1, enemy2, enemy3];
+const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
 // Place the player object in a variable called player
-const player = new Player();
+let player = new Player();
 
 
 // This listens for key presses and sends the keys to your
@@ -122,4 +140,8 @@ document.addEventListener('keyup', function(e) {
 
 function newFunction() {
     return new Enemy();
+}
+
+function resetGame() {
+    player = new Player();
 }
