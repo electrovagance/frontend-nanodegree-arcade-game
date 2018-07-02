@@ -11,7 +11,8 @@ let Enemy = function() {
     // returns random y coordinate from the yCoordinates set 
     this.y = yCoordinates[Math.floor(Math.random() * 3)];
 
-    this.speed = Math.random() * 7 +3;
+    this.speed = Math.random() * 3 +3;
+    // this.speed = 1;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -25,7 +26,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.    
     this.x = Math.floor(this.x + this.speed);
     ctx.drawImage(Resources.get(this.sprite), this.x*dt, this.y);
-    
+
     // resets x coordiante if bug is off screen
     if (this.x > 700) this.x = -700;
     
@@ -46,30 +47,6 @@ let Player = function() {
 }
 
 
-// TODO
-// Checks if Enemy occupies same location as sprint
-function checkCollisions() {
-    // check if any of the enemy is on the same y coordinate   
-    const yCoor = allEnemies.map(
-        enemy => enemy.y
-    );
-
-    const xCoor = allEnemies.map(
-        enemy => enemy.x
-    );
-
-
-    for (let i = 0; i < yCoor.length; i++) {
-        // checks if player;s or enemy's x coordinate match
-        if (xCoor[i] === this.x) {
-            if (yCoor[i] === this.y) {
-                console.log('Collusion!');
-                resetGame();
-            }
-        }
-    }
- 
-}
 
 // Update the players's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -77,13 +54,13 @@ Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    ctx.drawImage(Resources.get(this.sprite), this.x-10, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x*dt-10, this.y);
+    this.checkCollisions(this);
 };
 
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    checkCollisions.call(this);
 };
 
 //  Updates player position
@@ -112,16 +89,42 @@ Player.prototype.handleInput = function (allowedKeys) {
     this.render();
 }
 
+Player.prototype.checkCollisions = function () {
+    // check if any of the enemy is on the same y coordinate   
+    const yCoor = allEnemies.map(
+        enemy => enemy.y
+    );
+
+    const xCoor = allEnemies.map(
+        enemy => enemy.x
+    );
+
+
+    for (let i = 0; i < yCoor.length; i++) {
+        // checks if player;s or enemy's y coordinate match
+        if (yCoor[i] === this.y) {
+            // since every enemy has a different speed, we cannot quarantee that every sprite lands
+            // on the same exact x coordinate, therefore a range of 140 is given for collusion check
+            if (xCoor[i]-70 < this.x && xCoor[i]+70 > this.x) {
+                console.log('Collusion!');
+                resetGame();
+            }
+        }
+    }
+
+}
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-const enemy1 = new Enemy();
-const enemy2 = new Enemy();
-const enemy3 = new Enemy();
-const enemy4 = new Enemy();
-const enemy5 = new Enemy();
-const enemy6 = new Enemy();
-const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+const allEnemies = [
+    new Enemy(),
+    new Enemy(),
+    new Enemy(),
+    new Enemy(),
+    new Enemy(),
+    new Enemy()
+];
 
 // Place the player object in a variable called player
 let player = new Player();
@@ -140,10 +143,11 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-function newFunction() {
+function newEnemy() {
     return new Enemy();
 }
 
 function resetGame() {
     player = new Player();
+    for (let i = 0; i < 6; i++) allEnemies[i] = newEnemy();
 }
